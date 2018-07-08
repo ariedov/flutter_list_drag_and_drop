@@ -379,7 +379,7 @@ class DraggableListItem extends StatelessWidget {
 
       return _getListChild(context);
     } else {
-      return new LongPressMyDraggable<Data>(
+      return new MyDraggable<Data>(
           key: myKey,
           child: _getListChild(context),
           feedback: _getFeedback(index, context),
