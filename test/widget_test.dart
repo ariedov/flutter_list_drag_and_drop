@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_list_drag_and_drop/drag_and_drop_list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -73,7 +72,7 @@ void testSwap() {
     expect(find.text('8'), findsOneWidget);
     expect(find.text('16'), findsNothing);
 
-    await longPressDrag(find.text('0'), tester, new Offset(0.0, tileSize * 5));
+    await pressDrag(find.text('0'), tester, new Offset(0.0, tileSize * 5));
 
     print(items);
     expect(items[0], '1');
@@ -85,7 +84,7 @@ void testSwap() {
     expect(items[7], '7');
     expect(items[8], '8');
 
-    await longPressDragOffset(
+    await pressDragOffset(
         new Offset(100.0, tileSize * 5), tester, new Offset(0.0, tileSize * 2));
     expect(items[0], '1');
     expect(items[1], '2');
@@ -97,7 +96,7 @@ void testSwap() {
     expect(items[7], '5');
     print(items);
 
-    await longPressDragOffset(
+    await pressDragOffset(
         new Offset(100.0, tileSize * 6), tester, new Offset(0.0, tileSize * 2));
     expect(items[0], '1');
     expect(items[1], '2');
@@ -109,7 +108,7 @@ void testSwap() {
     expect(items[7], '6');
     print(items);
 
-    await longPressDragOffset(
+    await pressDragOffset(
         new Offset(100.0, tileSize * 5), tester, new Offset(0.0, tileSize * 2));
     expect(items[0], '1');
     expect(items[1], '2');
@@ -124,29 +123,29 @@ void testSwap() {
 }
 
 /// Dispatch a pointer down / pointer up sequence at the given location with
-/// a delay of [kLongPressTimeout] + [kPressTimeout] between the two events.
-Future<Null> longPressDrag(
+/// a delay of [kPressTimeout] between the two events.
+Future<Null> pressDrag(
     Finder finder, WidgetTester tester, Offset dragOffset) {
   Offset location = tester.getCenter(finder);
   return TestAsyncUtils.guard(() async {
     final TestGesture gesture = await tester.startGesture(location);
-    await tester.pump(kLongPressTimeout + kPressTimeout);
+    await tester.pump(kPressTimeout);
     await gesture.moveBy(dragOffset);
-    await tester.pump(kLongPressTimeout + kPressTimeout);
+    await tester.pump(kPressTimeout);
     await gesture.up();
     return null;
   });
 }
 
 /// Dispatch a pointer down / pointer up sequence at the given location with
-/// a delay of [kLongPressTimeout] + [kPressTimeout] between the two events.
-Future<Null> longPressDragOffset(
+/// a delay of [kPressTimeout] between the two events.
+Future<Null> pressDragOffset(
     Offset location, WidgetTester tester, Offset dragOffset) {
   return TestAsyncUtils.guard(() async {
     final TestGesture gesture = await tester.startGesture(location);
-    await tester.pump(kLongPressTimeout + kPressTimeout);
+    await tester.pump(kPressTimeout);
     await gesture.moveBy(dragOffset, timeStamp: new Duration(seconds: 2));
-    await tester.pump(kLongPressTimeout + kPressTimeout);
+    await tester.pump(kPressTimeout);
     await gesture.up();
     return null;
   });

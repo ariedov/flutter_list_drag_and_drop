@@ -209,6 +209,7 @@ class _DragAndDropListState<T> extends State<DragAndDropList> {
         _accept(index, data);
       },
       onMove: (Offset offset) {
+        print("Just started dragging: $didJustStartDragging");
         if(didJustStartDragging) {
           didJustStartDragging = false;
           offsetToStartOfItem = offset.dy - middleOfItemInGlobalPosition;
@@ -304,7 +305,7 @@ class _DragAndDropListState<T> extends State<DragAndDropList> {
     });
 
     if (_currentIndex >= rows.length) {
-      _currentIndex--;
+      return;
     }
 
     setState(() {
